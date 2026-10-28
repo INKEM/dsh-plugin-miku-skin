@@ -12,7 +12,7 @@
 - **字符**：`MIKU`、`初音未来`、`01`、`39`、`♪`、`♫`、`♬`、`♩`；
 - **配色**：深海青绿 `#39c5bb`、亮青 `#6ff7ec`、背景底色 `#10171b`、分割线 `#30444b`、少量粉色 `#ff6fb5` 作点缀。
 
-运行时没有 `.png/.jpg/.webp/.gif/.svg` 资源文件，没有 `data:image`，没有外部字体、CDN 或网络请求。仓库中的 `docs/preview.png` 只用于 README 配图，不参与皮肤渲染。
+运行时没有 `.png/.jpg/.webp/.gif/.svg` 资源文件，没有 `data:image`，没有外部字体、CDN 或网络请求。仓库中的 `docs/preview.png` 只用于 README 配图，`assets/icon.svg` 只用于 DSH Plugins 卡片的包图标，二者都不参与皮肤渲染。
 
 > 非官方同人主题，与初音未来权利方无关。不包含官方美术、Logo 或歌词。
 
@@ -78,6 +78,7 @@ dsh-plugin-miku-skin/
 │   ├── verify.mjs               # mock 运行时 / token / 运行时无图片 / 对比度检查
 │   └── token-snapshot.json      # 0.2.1-rc.2 基线 token 清单
 ├── docs/preview.png             # README 配图（仅文档，不参与皮肤渲染）
+├── assets/icon.svg              # DSH Plugins 卡片包图标（仅元数据，不参与皮肤渲染）
 ├── dev/preview.html             # 本地视觉预览（不随包发布）
 ├── README.md
 └── LICENSE
@@ -103,11 +104,37 @@ node scripts/verify.mjs
 - 几何标记、`01`、`MIKU`/`♪`、装饰层的 4 个音符与 9 根均衡器条；
 - 放大/卸载时根标记的清理；
 - 113 个 alias token、77 个 static token、7 个额外主题变量全部覆盖；
-- 运行时（`src/`、`lib/`、`locale/`）不含图片文件、没有 `data:image`、没有 `<img`、没有 `url()`、没有远程地址；`docs/preview.png` 是唯一的文档配图；
+- 运行时（`src/`、`lib/`、`locale/`）不含图片文件、没有 `data:image`、没有 `<img`、没有 `url()`、没有远程地址；`docs/preview.png` 只用于文档，`assets/icon.svg` 只用于包图标；
 - 背景底色与分割线色与 `codex-miku-skin` 的取值一致，`.dsh-miku-glow` 整体渐变已移除，网格/扫描线/HUD/双马尾/音符/均衡器仍在；
+- `package.json` 的仓库、作者、关键词、engines、publishConfig、icon 和 files 元数据完整，包图标为自包含 SVG；
 - 核心文字/状态色的 WCAG 对比度。
 
-当前结果：**20 项检查全部通过**；核心对比度例如主文字 17.47:1、次级文字 9.73:1、青底深字 8.89:1、错误色 5.84:1。
+当前结果：**22 项检查全部通过**；核心对比度例如主文字 17.47:1、次级文字 9.73:1、青底深字 8.89:1、错误色 5.84:1。
+
+## 包元信息与发布
+
+`package.json` 已按 npm / DSH 插件市场要求配置：
+
+| 字段 | 值 |
+| --- | --- |
+| 包名 / 版本 | `dsh-plugin-miku-skin` / `1.1.0` |
+| 描述 | Hatsune Miku-inspired dark skin for the DSH Web GUI；运行时无图片资源 |
+| 作者 | `INKEM` · <https://github.com/INKEM> |
+| 仓库 / 主页 / 问题 | <https://github.com/INKEM/dsh-plugin-miku-skin> |
+| License | MIT |
+| 关键词 | `deepseek-harness`、`dsh`、`dsh-plugin`、`dsh-theme`、`theme`、`skin`、`miku`、`hatsune-miku`、`dark-theme`、`web-ui` |
+| 兼容性 | `engines.node: ">=22"`、`engines.dsh: "^0.2.1-rc.2"`（当前运行时 0.2.1-rc.2） |
+| 发布配置 | `publishConfig.access: "public"`，registry 为 `https://registry.npmjs.org/` |
+| 包图标 | `assets/icon.svg`（Plugins 卡片使用，不参与皮肤渲染） |
+| DSH 元数据 | `dsh.manifestVersion: 1`、`dsh.bundle.patch`、`dsh.client.platform: "web"`、locale meta |
+| 子路径导出 | `.`、`./client`、`./icon`、`./cordis.patch.yml`、`./skin.json`、`./package.json`、`./locale/*.json` |
+
+`private` 已移除，便于通过 npm / GitHub 分发；`prepack` 会自动运行 `npm run check`。本次未执行 `npm publish`。
+
+```bash
+npm pack --dry-run   # 检查将发布的文件
+npm publish          # 需要先 npm login
+```
 
 ## 本机安装状态（当前 profile）
 
@@ -117,11 +144,18 @@ node scripts/verify.mjs
 - `package.json` 新增依赖 `"dsh-plugin-miku-skin": "link:/home/inkem/Personal/dsh-plugin-miku-skin"`；
 - `dsh.profile.bundles` 末尾新增 `"dsh-plugin-miku-skin"`；
 - `node_modules/dsh-plugin-miku-skin` 是指向 `/home/inkem/Personal/dsh-plugin-miku-skin` 的符号链接；
-- 旧路径 `/home/inkem/dsh-plugin-miku-skin` 目前保留为指向新仓库的兼容符号链接，让未重启的 `dsh web` 仍能解析启动时缓存的包路径；下次重启后可删除：
+- 当前包版本为 `1.1.0`；
+- 旧路径 `/home/inkem/dsh-plugin-miku-skin` 目前保留为指向新仓库的兼容符号链接，让未重启的 `dsh web` 仍能解析启动时缓存的包路径；**只有真正重启过 `dsh web`、新进程已从新路径加载后**，才可以删除：
 
   ```bash
   test -L /home/inkem/dsh-plugin-miku-skin && rm /home/inkem/dsh-plugin-miku-skin
   ```
+
+  > 在重启前删除它，Plugins 页面会出现 `包元信息错误`（Host 仍按旧路径读取 `locale/` 与 `assets/icon.svg`）。恢复：
+  >
+  > ```bash
+  > ln -s /home/inkem/Personal/dsh-plugin-miku-skin /home/inkem/dsh-plugin-miku-skin
+  > ```
 
 - `cordis.patch.yml` 未被修改；
 - 安装前备份：`~/.dsh/backups/web-before-miku-skin-20261028T203840/`（`package.json`、`pnpm-lock.yaml`、`cordis.patch.yml`）；

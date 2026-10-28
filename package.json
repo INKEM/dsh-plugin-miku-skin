@@ -1,14 +1,49 @@
 {
   "name": "dsh-plugin-miku-skin",
-  "version": "1.0.0",
-  "description": "Hatsune Miku-inspired dark skin for the DSH Web GUI, drawn only with geometry, characters, and color — no image assets.",
-  "private": true,
+  "version": "1.1.0",
+  "description": "Hatsune Miku-inspired dark skin for the DeepSeek Harness Web GUI, built from geometry, glyphs, and a #10171b/#30444b teal palette. The skin runtime uses no image assets.",
+  "license": "MIT",
+  "author": {
+    "name": "INKEM",
+    "url": "https://github.com/INKEM"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/INKEM/dsh-plugin-miku-skin.git"
+  },
+  "homepage": "https://github.com/INKEM/dsh-plugin-miku-skin#readme",
+  "bugs": {
+    "url": "https://github.com/INKEM/dsh-plugin-miku-skin/issues"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-theme",
+    "theme",
+    "skin",
+    "miku",
+    "hatsune-miku",
+    "dark-theme",
+    "web-ui"
+  ],
+  "engines": {
+    "node": ">=22",
+    "dsh": "^0.2.1-rc.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "type": "module",
   "main": "lib/index.js",
+  "icon": "assets/icon.svg",
   "exports": {
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
+    "./icon": "./assets/icon.svg",
     "./cordis.patch.yml": "./cordis.patch.yml",
+    "./skin.json": "./skin.json",
     "./package.json": "./package.json",
     "./locale/*.json": "./locale/*.json"
   },
@@ -18,17 +53,11 @@
     "src",
     "scripts",
     "docs",
+    "assets",
     "cordis.patch.yml",
     "skin.json",
     "README.md",
     "LICENSE"
-  ],
-  "keywords": [
-    "dsh",
-    "dsh-plugin",
-    "theme",
-    "skin",
-    "miku"
   ],
   "dsh": {
     "manifestVersion": 1,
@@ -42,7 +71,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "verify": "node scripts/verify.mjs",
-    "check": "node scripts/build.mjs && node --check lib/client.js && node --check lib/index.js && node scripts/verify.mjs"
-  },
-  "license": "MIT"
+    "check": "node scripts/build.mjs && node --check lib/client.js && node --check lib/index.js && node scripts/verify.mjs",
+    "prepack": "npm run check"
+  }
 }

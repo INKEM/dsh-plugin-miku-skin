@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="miku-skin-icon-title">
+  <title id="miku-skin-icon-title">MIKU / 01 dark skin</title>
+  <rect width="128" height="128" rx="28" fill="#10171b"/>
+  <rect x="2" y="2" width="124" height="124" rx="26" fill="none" stroke="#30444b" stroke-width="4"/>
+  <path d="M49.6 20.8 C28 32.4 17.6 52.8 22 78.4 C24.4 92 20.4 105.2 15.6 116.4" fill="none" stroke="#1e6f70" stroke-width="13.6" stroke-linecap="round"/>
+  <path d="M78.4 20.8 C100 32.4 110.4 52.8 106 78.4 C103.6 92 107.6 105.2 112.4 116.4" fill="none" stroke="#1e6f70" stroke-width="13.6" stroke-linecap="round"/>
+  <path d="M49.6 20.8 C28 32.4 17.6 52.8 22 78.4 C24.4 92 20.4 105.2 15.6 116.4" fill="none" stroke="#6ff7ec" stroke-width="4.4" stroke-linecap="round" stroke-opacity=".85"/>
+  <path d="M78.4 20.8 C100 32.4 110.4 52.8 106 78.4 C103.6 92 107.6 105.2 112.4 116.4" fill="none" stroke="#6ff7ec" stroke-width="4.4" stroke-linecap="round" stroke-opacity=".85"/>
+  <circle cx="64" cy="60" r="24.8" fill="#0c1216" stroke="#39c5bb" stroke-width="4.8"/>
+  <path d="M40.4 52.4 C42.8 38.4 52 30.8 64 30.8 C76 30.8 85.2 38.4 87.6 52.4" fill="none" stroke="#6ff7ec" stroke-width="3.8" stroke-linecap="round" stroke-opacity=".8"/>
+  <circle cx="87.6" cy="52.4" r="3.8" fill="#ff6fb5"/>
+  <text x="64" y="69" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" font-weight="700" fill="#eafffd">01</text>
+</svg>

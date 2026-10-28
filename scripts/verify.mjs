@@ -45,7 +45,33 @@ check('package declares the web client half', () => {
   assert.equal(pkg.dsh.bundle.patch, './cordis.patch.yml')
   assert.equal(pkg.exports['./client'], './lib/client.js')
   assert.equal(pkg.exports['.'], './lib/index.js')
-  assert.equal(pkg.private, true)
+})
+
+check('package metadata is release-ready', () => {
+  assert.equal(pkg.private, undefined)
+  assert.equal(pkg.author.name, 'INKEM')
+  assert.equal(pkg.author.url, 'https://github.com/INKEM')
+  assert.equal(pkg.repository.url, 'git+https://github.com/INKEM/dsh-plugin-miku-skin.git')
+  assert.equal(pkg.homepage, 'https://github.com/INKEM/dsh-plugin-miku-skin#readme')
+  assert.equal(pkg.bugs.url, 'https://github.com/INKEM/dsh-plugin-miku-skin/issues')
+  assert.equal(pkg.license, 'MIT')
+  assert.ok(pkg.engines.dsh.includes('0.2.1-rc.2'), 'engines.dsh must allow the current baseline')
+  assert.ok(pkg.engines.node.includes('22'), 'engines.node must allow the current runtime')
+  assert.equal(pkg.publishConfig.access, 'public')
+  assert.equal(pkg.publishConfig.registry, 'https://registry.npmjs.org/')
+  assert.ok(pkg.files.includes('assets'), 'files must ship the package icon')
+  assert.ok(pkg.files.includes('docs'), 'files must ship the README preview')
+})
+
+check('package icon is a self-contained SVG', () => {
+  assert.equal(pkg.icon, 'assets/icon.svg')
+  assert.equal(pkg.exports['./icon'], './assets/icon.svg')
+  const icon = read('assets/icon.svg')
+  assert.match(icon, /^<svg\b/)
+  assert.ok(Buffer.byteLength(icon) < 256 * 1024, 'icon exceeds the manifest limit')
+  assert.ok(!/<image\b/i.test(icon), 'icon must not embed an image')
+  assert.ok(!/<script\b/i.test(icon), 'icon must not embed a script')
+  assert.ok(!/\b(?:xlink:)?href\s*=/i.test(icon), 'icon must not reference external content')
 })
 
 check('bundle patch replaces the official brand occupants', () => {

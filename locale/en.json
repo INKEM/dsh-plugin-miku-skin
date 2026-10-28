@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Miku Dark Skin",
-    "description": "A Hatsune Miku-inspired dark skin drawn only with geometry, characters, and color — no image assets."
+    "description": "A Hatsune Miku-inspired dark skin for the DSH Web GUI, drawn with geometry, glyphs, and a teal palette; the skin runtime uses no image assets."
   }
 }
