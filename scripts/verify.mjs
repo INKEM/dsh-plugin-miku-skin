@@ -3,9 +3,9 @@
  *
  * Runs the built browser bundle against a small fake DOM/React/Cordis runtime
  * to prove the registration surface, checks the palette covers the complete
- * 0.2.1-rc.2 token set, proves the package carries no image or network assets,
- * and checks the core WCAG contrast pairs. No browser, profile, or network is
- * required.
+ * 0.2.1-rc.2 token set, proves the runtime carries no image or network assets
+ * (the README preview under docs/ is documentation only), and checks the core
+ * WCAG contrast pairs. No browser, profile, or network is required.
  */
 import assert from 'node:assert/strict'
 import { readFileSync, readdirSync, statSync } from 'node:fs'
@@ -118,9 +118,19 @@ function walk(dir) {
   return files
 }
 
-check('package contains no image files', () => {
-  const offenders = walk(root).filter((file) => IMAGE_EXT.has(extname(file).toLowerCase()))
+check('runtime carries no image files', () => {
+  const runtimeDirs = ['src', 'lib', 'locale']
+  const files = runtimeDirs.flatMap((dir) => walk(join(root, dir)))
+  const offenders = files.filter((file) => IMAGE_EXT.has(extname(file).toLowerCase()))
   assert.deepEqual(offenders.map((file) => relative(root, file)), [])
+})
+
+check('README preview is documentation-only and referenced', () => {
+  const preview = readFileSync(join(root, 'docs/preview.png'))
+  assert.ok(preview.length > 0, 'docs/preview.png is empty')
+  assert.deepEqual([...preview.subarray(0, 8)], [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])
+  assert.ok(read('README.md').includes('docs/preview.png'), 'README does not reference docs/preview.png')
+  assert.ok((pkg.files ?? []).includes('docs'), 'package.json files does not include docs')
 })
 
 check('no image references or remote asset requests', () => {
@@ -349,17 +359,45 @@ function contrast(foreground, background) {
   return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
 }
 
+check('background and dividers align with codex-miku-skin; overall glow removed; patterns kept', () => {
+  for (const needle of [
+    '--mku-void: #10171b;',
+    '--mku-void-2: #121c21;',
+    '--mku-panel-1: #172126;',
+    '--mku-panel-2: #1c2a30;',
+    '--mku-panel-3: #243b42;',
+    '--mku-code: #141d22;',
+    '--mku-line-1: #24353c;',
+    '--mku-line-2: #30444b;',
+    '--mku-line-3: #30444b;',
+    '--mku-line-4: #45616a;',
+  ]) {
+    assert.ok(css.includes(needle), `missing reference palette value: ${needle}`)
+  }
+  for (const [label, text] of [
+    ['styles.css', css],
+    ['client.js', clientSource],
+    ['preview', read('dev/preview.html')],
+  ]) {
+    assert.ok(!text.includes('dsh-miku-glow'), `${label} still contains the removed overall glow`)
+    assert.ok(!text.includes('dsh-miku-breathe'), `${label} still contains the removed glow animation`)
+  }
+  for (const pattern of ['dsh-miku-scanlines', 'dsh-miku-grid', 'dsh-miku-ribbons', 'dsh-miku-hud', 'dsh-miku-notes', 'dsh-miku-eq']) {
+    assert.ok(css.includes('.' + pattern), `missing retained pattern: ${pattern}`)
+  }
+})
+
 check('core text and state colors meet WCAG AA', () => {
   const pairs = [
-    ['#ecfffc', '#060c15', 7, 'primary text'],
-    ['#a9cfcb', '#0b1826', 4.5, 'secondary text'],
-    ['#7fa6a4', '#0b1826', 4.5, 'tertiary text'],
+    ['#ecfffc', '#10171b', 7, 'primary text'],
+    ['#a9cfcb', '#172126', 4.5, 'secondary text'],
+    ['#7fa6a4', '#172126', 4.5, 'tertiary text'],
     ['#041318', '#39c5bb', 4.5, 'label on accent'],
-    ['#6ff7ec', '#060c15', 7, 'link on base'],
-    ['#ff7a7a', '#0f2030', 4.5, 'error'],
-    ['#4ee0a8', '#0f2030', 4.5, 'success'],
-    ['#f7ad31', '#0f2030', 4.5, 'warning'],
-    ['#ff6fb5', '#060c15', 4.5, 'pink accent'],
+    ['#6ff7ec', '#10171b', 7, 'link on base'],
+    ['#ff7a7a', '#1c2a30', 4.5, 'error'],
+    ['#4ee0a8', '#1c2a30', 4.5, 'success'],
+    ['#f7ad31', '#1c2a30', 4.5, 'warning'],
+    ['#ff6fb5', '#10171b', 4.5, 'pink accent'],
   ]
   const results = pairs.map(([fg, bg, minimum, label]) => ({ label, ratio: contrast(fg, bg), minimum }))
   const failures = results.filter((entry) => entry.ratio < entry.minimum)

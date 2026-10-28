@@ -18,14 +18,14 @@
 html[data-dsh-miku] {
   color-scheme: dark !important;
 
-  --mku-void: #060c15;
-  --mku-void-2: #08131f;
-  --mku-panel-1: #0b1826;
-  --mku-panel-2: #0f2030;
-  --mku-panel-3: #152a3a;
-  --mku-panel-4: #1b3547;
-  --mku-code: #07101a;
-  --mku-code-2: #0a1724;
+  --mku-void: #10171b;
+  --mku-void-2: #121c21;
+  --mku-panel-1: #172126;
+  --mku-panel-2: #1c2a30;
+  --mku-panel-3: #243b42;
+  --mku-panel-4: #1c2a30;
+  --mku-code: #141d22;
+  --mku-code-2: #172126;
 
   --mku-teal: #39c5bb;
   --mku-teal-bright: #6ff7ec;
@@ -46,10 +46,10 @@ html[data-dsh-miku] {
   --mku-ink-bright: #dffffb;
   --mku-on-accent: #041318;
 
-  --mku-line-1: rgba(111, 247, 236, 0.07);
-  --mku-line-2: rgba(111, 247, 236, 0.12);
-  --mku-line-3: rgba(111, 247, 236, 0.17);
-  --mku-line-4: rgba(111, 247, 236, 0.26);
+  --mku-line-1: #24353c;
+  --mku-line-2: #30444b;
+  --mku-line-3: #30444b;
+  --mku-line-4: #45616a;
 
   --dsw-focus-ring-color: var(--mku-teal-bright);
 }
@@ -112,8 +112,8 @@ html[data-dsh-miku] body {
   --dsw-static-neutral-550: #65676b;
   --dsw-static-neutral-600: #545557;
   --dsw-static-neutral-700: #3c3c3d;
-  --dsw-static-neutral-800: #172f42;
-  --dsw-static-neutral-850: #122536;
+  --dsw-static-neutral-800: #1c2a30;
+  --dsw-static-neutral-850: #172126;
   --dsw-static-neutral-900: #0f0f0f;
   --dsw-static-neutral-bluish-00: #fff;
   --dsw-static-neutral-bluish-1000: #0f1115;
@@ -160,7 +160,7 @@ html[data-dsh-miku] body {
   --dsw-alias-bg-mask-2: #00000033;
   --dsw-alias-bg-mask-3: #0000007a;
   --dsw-alias-bg-mask-photo: #000000e0;
-  --dsw-alias-bg-mask-drop: #08131fb3;
+  --dsw-alias-bg-mask-drop: #0c1216b3;
   --dsw-alias-bg-module-platform: var(--mku-panel-2);
   --dsw-alias-bg-multi-select: var(--mku-panel-2);
   --dsw-alias-bg-overlay: var(--mku-panel-4);
@@ -168,7 +168,7 @@ html[data-dsh-miku] body {
   --dsw-alias-border-inverted2: #04131824;
   --dsw-alias-border-inverted: #04131814;
   --dsw-alias-border-l1: var(--mku-line-1);
-  --dsw-alias-border-l2-darkmode-thin: rgba(111, 247, 236, 0.1);
+  --dsw-alias-border-l2-darkmode-thin: #24353c;
   --dsw-alias-border-l2: var(--mku-line-2);
   --dsw-alias-border-l3: var(--mku-line-3);
   --dsw-alias-border-l4: var(--mku-line-4);
@@ -177,24 +177,24 @@ html[data-dsh-miku] body {
   --dsw-alias-brand-primary: var(--mku-teal);
   --dsw-alias-brand-text: var(--mku-ink-bright);
   --dsw-alias-button-contrast-fill: #e6fffc;
-  --dsw-alias-button-elevated-fill: #122536;
-  --dsw-alias-button-floating-fill: #0f2030;
-  --dsw-alias-button-floating-hover: #152a3a;
-  --dsw-alias-button-ghost-active-border: #2a5a5c;
-  --dsw-alias-button-ghost-active-fill: #12303a;
-  --dsw-alias-button-ghost-active-hover: #173a44;
+  --dsw-alias-button-elevated-fill: #1b2a30;
+  --dsw-alias-button-floating-fill: #172126;
+  --dsw-alias-button-floating-hover: #1c2a30;
+  --dsw-alias-button-ghost-active-border: #30444b;
+  --dsw-alias-button-ghost-active-fill: #153a3b;
+  --dsw-alias-button-ghost-active-hover: #1b4747;
   --dsw-alias-button-info-fill: var(--mku-blue);
   --dsw-alias-button-info-hover: #86c7ff;
   --dsw-alias-button-primary-dimmed: #155a58;
   --dsw-alias-button-primary-fill: var(--mku-teal);
   --dsw-alias-button-primary-hover: #7ff7ec;
-  --dsw-alias-button-tool-bar-fill-invisible: #07131f66;
-  --dsw-alias-button-tool-bar-fill: #0918229e;
-  --dsw-alias-button-tool-bar-hover: #112a38b8;
+  --dsw-alias-button-tool-bar-fill-invisible: #10171b66;
+  --dsw-alias-button-tool-bar-fill: #17212699;
+  --dsw-alias-button-tool-bar-hover: #1c2a30b8;
   --dsw-alias-interactive-bg-active: rgba(57, 197, 187, 0.18);
   --dsw-alias-interactive-bg-hover-accent: rgba(57, 197, 187, 0.28);
   --dsw-alias-interactive-bg-hover-danger: rgba(255, 122, 122, 0.14);
-  --dsw-alias-interactive-bg-hover-solid: #122536;
+  --dsw-alias-interactive-bg-hover-solid: #1b2a30;
   --dsw-alias-interactive-bg-hover: rgba(57, 197, 187, 0.1);
   --dsw-alias-label-caption: var(--mku-ink-4);
   --dsw-alias-label-deep-diving: #7ff3e8;
@@ -210,20 +210,20 @@ html[data-dsh-miku] body {
   --dsw-alias-label-tertiary: var(--mku-ink-3);
   --dsw-alias-menu-icon: #c9ede9;
   --dsw-alias-link: var(--mku-teal-bright);
-  --dsw-alias-markdown-citation: #12303a;
+  --dsw-alias-markdown-citation: #1c2a30;
   --dsw-alias-markdown-code-block-banner: var(--mku-code-2);
   --dsw-alias-markdown-code-block: var(--mku-code);
-  --dsw-alias-markdown-code-segment-selected: #11293a;
+  --dsw-alias-markdown-code-segment-selected: #1c2a30;
   --dsw-alias-markdown-code-segment-unselected: var(--mku-code);
-  --dsw-alias-markdown-inline-code: #0f2230;
-  --dsw-alias-markdown-placeholder: #0c1b29;
-  --dsw-alias-markdown-tag: #0e2231;
-  --dsw-alias-scrollbar-bg-l1: #245b5c;
-  --dsw-alias-scrollbar-bg-l2: #2f7373;
-  --dsw-alias-scrollbar-hover-l1: #3c8988;
-  --dsw-alias-scrollbar-hover-l2: #4fa8a5;
+  --dsw-alias-markdown-inline-code: #153a3b;
+  --dsw-alias-markdown-placeholder: #141d22;
+  --dsw-alias-markdown-tag: #1c2a30;
+  --dsw-alias-scrollbar-bg-l1: #30444b;
+  --dsw-alias-scrollbar-bg-l2: #30444b;
+  --dsw-alias-scrollbar-hover-l1: #45616a;
+  --dsw-alias-scrollbar-hover-l2: #45616a;
   --dsw-alias-state-business-primary: var(--mku-teal);
-  --dsw-alias-state-business-tertiary: #123a3a;
+  --dsw-alias-state-business-tertiary: #153a3b;
   --dsw-alias-code-diff-added: #4ee0a81f;
   --dsw-alias-code-diff-deleted: #ff7a7a1f;
   --dsw-alias-file-diff-added-bg: #0f3326;
@@ -243,33 +243,33 @@ html[data-dsh-miku] body {
   --dsw-alias-state-warn-secondary: #f5c56b;
   --dsw-alias-state-warn-tertiary: #3a2a12;
   --dsw-alias-switch-thumb: #9fe7e1;
-  --dsw-alias-toast-bg: #122536;
+  --dsw-alias-toast-bg: #1c2a30;
   --dsw-alias-toast-label: var(--mku-ink);
-  --dsw-alias-tooltip-bg: #122536;
-  --dsw-alias-tooltip-key-bg: #1b3546;
+  --dsw-alias-tooltip-bg: #1c2a30;
+  --dsw-alias-tooltip-key-bg: #243b42;
   --dsw-alias-turn-trigger-bg: rgba(57, 197, 187, 0.1);
   --dsw-alias-turn-trigger-bg-hover: rgba(57, 197, 187, 0.18);
-  --dsw-specific-bubble-highlight: #143640;
-  --dsw-specific-bubble: #0e2730;
+  --dsw-specific-bubble-highlight: #203b41;
+  --dsw-specific-bubble: #1a3035;
   --dsw-specific-input-major: var(--mku-panel-2);
   --dsw-specific-login-input: var(--mku-panel-1);
-  --dsw-menu-surface-fill: #071019db;
-  --dsw-alias-menu-group-header-fill: #091522f0;
+  --dsw-menu-surface-fill: #172126e6;
+  --dsw-alias-menu-group-header-fill: #1c2a30f0;
   --dsw-specific-menu: var(--dsw-menu-surface-fill);
-  --dsw-specific-selector: #102433;
+  --dsw-specific-selector: #1c2a30;
   --dsw-specific-sidebar-fill: var(--mku-void-2);
-  --dsw-specific-sidebar-nav-item-active-accent: rgba(57, 197, 187, 0.22);
-  --dsw-specific-sidebar-nav-item-active: #0e2a32;
-  --dsw-specific-sidebar-nav-item-hover: #0a1d25;
-  --dsw-specific-tip: #0d2130;
+  --dsw-specific-sidebar-nav-item-active-accent: #153a3b;
+  --dsw-specific-sidebar-nav-item-active: #193338;
+  --dsw-specific-sidebar-nav-item-hover: #1c3035;
+  --dsw-specific-tip: #1c2a30;
 }
 
 /* Onboarding and focus aliases live outside the design-platform alias block. */
 html[data-dsh-miku] body {
   --dsw-alias-onboarding-accent: var(--mku-teal);
-  --dsw-alias-onboarding-card-fill: #0f2030cc;
-  --dsw-alias-onboarding-secondary-fill: #1a3340;
-  --dsw-alias-onboarding-checkbox-border: rgba(111, 247, 236, 0.35);
+  --dsw-alias-onboarding-card-fill: #172126cc;
+  --dsw-alias-onboarding-secondary-fill: #1c2a30;
+  --dsw-alias-onboarding-checkbox-border: #45616a;
   --dsw-gradient-onboarding-violet-stops: #0e3b3f 33.102%, #39c5bb 50.954%, #a5ffd9 85.326%, #0e3b3f;
   --dsw-gradient-onboarding-blue-stops: #1e6f70 18.75%, #39c5bb 51.78%, #6ff7ec 86.252%, #1e6f70;
   --dsw-gradient-onboarding-cyan-stops: #0e3b3f 21.154%, #39c5bb 50.954%, #b6fff5 85.326%, #0e3b3f;
@@ -277,18 +277,18 @@ html[data-dsh-miku] body {
 
 /* Dark-only component variables and the shiki syntax palette. */
 html[data-dsh-miku] body {
-  --changes-fill: #122536;
-  --changes-hover: #172f42;
-  --deliverable-fill: #122536;
-  --deliverable-hover: #172f42;
-  --plan-card-fill: #122536;
-  --plan-card-hover: #172f42;
-  --card-fill: #122536;
-  --card-hover: #172f42;
+  --changes-fill: #172126;
+  --changes-hover: #1c2a30;
+  --deliverable-fill: #172126;
+  --deliverable-hover: #1c2a30;
+  --plan-card-fill: #172126;
+  --plan-card-hover: #1c2a30;
+  --card-fill: #172126;
+  --card-hover: #1c2a30;
 
   --dsw-elevation-stroke-color: var(--mku-line-3);
-  --dsw-linear-gradient-think: linear-gradient(180deg, #0b1826 20.19%, rgba(11, 24, 38, 0) 100%);
-  --dsw-linear-think-select: linear-gradient(180deg, #102a33 20.19%, rgba(16, 42, 51, 0) 100%);
+  --dsw-linear-gradient-think: linear-gradient(180deg, #172126 20.19%, rgba(23, 33, 38, 0) 100%);
+  --dsw-linear-think-select: linear-gradient(180deg, #1c2a30 20.19%, rgba(28, 42, 48, 0) 100%);
 
   --shiki-background: var(--mku-code);
   --shiki-foreground: var(--mku-ink);
@@ -306,7 +306,7 @@ html[data-dsh-miku] body {
 /* Darwin keeps a separate menu fill in the base sheet; match the film there. */
 html[data-platform='darwin'][data-dsh-miku] body,
 html[data-platform='darwin'][data-dsh-miku] body[data-ds-dark-theme] {
-  --dsw-specific-menu: #071019ef;
+  --dsw-specific-menu: #172126f2;
 }
 
 /* ------------------------------------------------------------------ *
@@ -433,16 +433,6 @@ html[data-dsh-miku] body :is(input, textarea, [contenteditable='true'], [content
 
 .dsh-miku-ambient > * {
   pointer-events: none;
-}
-
-.dsh-miku-glow {
-  position: absolute;
-  inset: -12%;
-  background:
-    radial-gradient(38% 42% at 88% 4%, rgba(57, 197, 187, 0.2), transparent 70%),
-    radial-gradient(34% 38% at 6% 98%, rgba(255, 111, 181, 0.11), transparent 70%),
-    radial-gradient(28% 32% at 4% 2%, rgba(111, 247, 236, 0.08), transparent 72%);
-  animation: dsh-miku-breathe 12s ease-in-out infinite;
 }
 
 .dsh-miku-scanlines {
@@ -590,11 +580,6 @@ html[data-dsh-miku] body :is(input, textarea, [contenteditable='true'], [content
   text-shadow: 0 0 10px rgba(57, 197, 187, 0.28);
 }
 
-@keyframes dsh-miku-breathe {
-  0%, 100% { opacity: 0.78; }
-  50% { opacity: 1; }
-}
-
 @keyframes dsh-miku-float {
   0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
   50% { transform: translate3d(0, -14px, 0) rotate(3deg); }
@@ -646,7 +631,7 @@ html[data-dsh-miku] body :is(input, textarea, [contenteditable='true'], [content
 
 @media (prefers-reduced-transparency: reduce) {
   html[data-dsh-miku] body {
-    --dsw-menu-surface-fill: #08131ff5;
-    --dsw-alias-menu-group-header-fill: #091522;
+    --dsw-menu-surface-fill: #172126;
+    --dsw-alias-menu-group-header-fill: #1c2a30;
   }
 }

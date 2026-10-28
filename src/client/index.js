@@ -98,7 +98,7 @@ function MikuMark({ size = 24, className }) {
         cx: 16,
         cy: 15,
         r: 6.2,
-        fill: '#07101a',
+        fill: '#0c1216',
         stroke: '#39c5bb',
         strokeWidth: 1.2,
       }),
@@ -156,7 +156,6 @@ function MikuAmbient() {
   return React.createElement(
     'div',
     { className: 'dsh-miku-ambient', 'aria-hidden': 'true' },
-    React.createElement('div', { className: 'dsh-miku-glow' }),
     React.createElement('div', { className: 'dsh-miku-scanlines' }),
     React.createElement('div', { className: 'dsh-miku-grid' }),
     React.createElement(

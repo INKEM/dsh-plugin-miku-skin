@@ -2,13 +2,17 @@
 
 为 DeepSeek Harness Web GUI 制作的初音未来主题暗色皮肤插件。
 
-**不直接使用图片**：全部视觉由以下三类元素构成——
+![初音未来 · DSH 暗色皮肤预览](./docs/preview.png)
+
+> 上图为 `dev/preview.html` 模拟界面截图，仅用于 README 文档展示；**皮肤运行时（`src/`、`lib/`、`locale/`）不使用任何图片资源**。
+
+**不直接使用图片**：皮肤的全部视觉由以下三类元素构成——
 
 - **几何**：内联 SVG 双马尾路径、HUD 角标、数字网格、双马尾曲线、均衡器条、CSS 径向/线性渐变；
 - **字符**：`MIKU`、`初音未来`、`01`、`39`、`♪`、`♫`、`♬`、`♩`；
-- **配色**：深海青绿 `#39c5bb`、亮青 `#6ff7ec`、深空底色 `#060c15`、少量粉色 `#ff6fb5` 作点缀。
+- **配色**：深海青绿 `#39c5bb`、亮青 `#6ff7ec`、背景底色 `#10171b`、分割线 `#30444b`、少量粉色 `#ff6fb5` 作点缀。
 
-包内没有 `.png/.jpg/.webp/.gif/.svg` 资源文件，没有 `data:image`，没有外部字体、CDN 或网络请求。
+运行时没有 `.png/.jpg/.webp/.gif/.svg` 资源文件，没有 `data:image`，没有外部字体、CDN 或网络请求。仓库中的 `docs/preview.png` 只用于 README 配图，不参与皮肤渲染。
 
 > 非官方同人主题，与初音未来权利方无关。不包含官方美术、Logo 或歌词。
 
@@ -20,10 +24,25 @@
 
 - 侧栏品牌位显示 `MIKU` 字标、`01` 胶囊与 `♪`；品牌标记为几何双马尾 + 头戴麦克风 + `01` 数字；
 - 空会话 Hero 位显示同一几何标记，并继承原生的悬停摆动；
-- 全局边缘出现可点击穿透的装饰层：四角 HUD 括号、边缘网格、右侧双马尾曲线、漂浮音符、均衡器、竖排「初音未来 / MIKU 39」；
+- 背景为扁平深青灰 `#10171b`（无整体渐变）；全局边缘仍保留可点击穿透的装饰层：四角 HUD 括号、边缘网格、右侧双马尾曲线、漂浮音符、均衡器、竖排「初音未来 / MIKU 39」；
 - 全部 DSH 颜色令牌切换为暗色青绿体系：按钮、链接、焦点环、选中态、光标、滚动条、菜单、用户气泡、代码块、Markdown、Shiki 语法色、状态色；
 - `prefers-reduced-motion` 下装饰动画停止；`forced-colors` 下装饰层隐藏；
 - 无论外观偏好设为浅色、深色还是跟随系统，**皮肤启用期间界面保持暗色**（暗色-only 皮肤）。
+
+### 与 codex-miku-skin 对齐
+
+背景底色与分割线颜色取自 `~/Personal/codex-miku-skin/miku-dark.css`：
+
+| 用途 | 颜色 |
+| --- | --- |
+| 应用底色 / `bg-base` | `#10171b` |
+| 侧栏 | `#121c21` |
+| 面板 / control | `#172126` |
+| 抬升表面 | `#1c2a30` |
+| 代码 / 编辑器 | `#141d22` |
+| 分割线 light / base / heavy | `#24353c` / `#30444b` / `#45616a` |
+
+同时移除了原先的 `.dsh-miku-glow` 全屏径向渐变，背景改为纯色；网格、扫描线、HUD 角标、双马尾曲线、音符与均衡器等图案仍保留。
 
 ## 设计取舍
 
@@ -56,8 +75,9 @@ dsh-plugin-miku-skin/
 │       └── styles.css           # 令牌映射 + 几何/字符装饰
 ├── scripts/
 │   ├── build.mjs                # 无依赖构建：CSS 内联进 client bundle
-│   ├── verify.mjs               # mock 运行时 / token / 无图片 / 对比度检查
+│   ├── verify.mjs               # mock 运行时 / token / 运行时无图片 / 对比度检查
 │   └── token-snapshot.json      # 0.2.1-rc.2 基线 token 清单
+├── docs/preview.png             # README 配图（仅文档，不参与皮肤渲染）
 ├── dev/preview.html             # 本地视觉预览（不随包发布）
 ├── README.md
 └── LICENSE
@@ -68,7 +88,7 @@ dsh-plugin-miku-skin/
 无需安装依赖：
 
 ```bash
-cd /home/inkem/dsh-plugin-miku-skin
+cd /home/inkem/Personal/dsh-plugin-miku-skin
 node scripts/build.mjs
 node --check lib/client.js
 node --check lib/index.js
@@ -83,18 +103,26 @@ node scripts/verify.mjs
 - 几何标记、`01`、`MIKU`/`♪`、装饰层的 4 个音符与 9 根均衡器条；
 - 放大/卸载时根标记的清理；
 - 113 个 alias token、77 个 static token、7 个额外主题变量全部覆盖；
-- 包内没有图片文件、没有 `data:image`、没有 `<img`、没有 `url()`、没有远程地址；
+- 运行时（`src/`、`lib/`、`locale/`）不含图片文件、没有 `data:image`、没有 `<img`、没有 `url()`、没有远程地址；`docs/preview.png` 是唯一的文档配图；
+- 背景底色与分割线色与 `codex-miku-skin` 的取值一致，`.dsh-miku-glow` 整体渐变已移除，网格/扫描线/HUD/双马尾/音符/均衡器仍在；
 - 核心文字/状态色的 WCAG 对比度。
 
-当前结果：**18 项检查全部通过**；核心对比度例如主文字 18.93:1、次级文字 10.64:1、青底深字 8.89:1、错误色 6.55:1。
+当前结果：**20 项检查全部通过**；核心对比度例如主文字 17.47:1、次级文字 9.73:1、青底深字 8.89:1、错误色 5.84:1。
 
 ## 本机安装状态（当前 profile）
 
 已安装到 `~/.dsh/profiles/web`：
 
-- `package.json` 新增依赖 `"dsh-plugin-miku-skin": "link:/home/inkem/dsh-plugin-miku-skin"`；
+- 仓库位于 `/home/inkem/Personal/dsh-plugin-miku-skin`；
+- `package.json` 新增依赖 `"dsh-plugin-miku-skin": "link:/home/inkem/Personal/dsh-plugin-miku-skin"`；
 - `dsh.profile.bundles` 末尾新增 `"dsh-plugin-miku-skin"`；
-- `node_modules/dsh-plugin-miku-skin` 是指向 `/home/inkem/dsh-plugin-miku-skin` 的符号链接；
+- `node_modules/dsh-plugin-miku-skin` 是指向 `/home/inkem/Personal/dsh-plugin-miku-skin` 的符号链接；
+- 旧路径 `/home/inkem/dsh-plugin-miku-skin` 目前保留为指向新仓库的兼容符号链接，让未重启的 `dsh web` 仍能解析启动时缓存的包路径；下次重启后可删除：
+
+  ```bash
+  test -L /home/inkem/dsh-plugin-miku-skin && rm /home/inkem/dsh-plugin-miku-skin
+  ```
+
 - `cordis.patch.yml` 未被修改；
 - 安装前备份：`~/.dsh/backups/web-before-miku-skin-20261028T203840/`（`package.json`、`pnpm-lock.yaml`、`cordis.patch.yml`）；
 - 当前 `dsh web` 进程未重启；HMR 已实时加载。
@@ -104,7 +132,7 @@ node scripts/verify.mjs
 ```bash
 cd ~/.dsh/profiles/<profile>
 # 若 pnpm 运行时锁目录被沙箱限制，可把 XDG_RUNTIME_DIR 指到可写目录：
-XDG_RUNTIME_DIR=/home/inkem/.cache/miku-runtime pnpm add link:/home/inkem/dsh-plugin-miku-skin
+XDG_RUNTIME_DIR=/home/inkem/.cache/miku-runtime pnpm add link:/home/inkem/Personal/dsh-plugin-miku-skin
 ```
 
 然后把 `dsh-plugin-miku-skin` 追加到该 profile `package.json` 的 `dsh.profile.bundles`，刷新 Web 页面即可。
@@ -136,7 +164,7 @@ BK=~/.dsh/backups/web-before-miku-skin-20261028T203840
 cp "$BK/package.json" "$BK/pnpm-lock.yaml" ~/.dsh/profiles/web/
 ```
 
-最后按需删除 `/home/inkem/dsh-plugin-miku-skin` 源码目录。
+最后按需删除 `/home/inkem/Personal/dsh-plugin-miku-skin` 源码目录。
 
 ---
 
@@ -152,7 +180,7 @@ cp "$BK/package.json" "$BK/pnpm-lock.yaml" ~/.dsh/profiles/web/
 ## 开发预览
 
 ```bash
-cd /home/inkem/dsh-plugin-miku-skin
+cd /home/inkem/Personal/dsh-plugin-miku-skin
 python3 -m http.server 4173 --bind 127.0.0.1
 # 打开 http://127.0.0.1:4173/dev/preview.html
 ```

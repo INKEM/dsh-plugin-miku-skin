@@ -17,6 +17,7 @@
     "locale",
     "src",
     "scripts",
+    "docs",
     "cordis.patch.yml",
     "skin.json",
     "README.md",
