@@ -1,0 +1,652 @@
+/*
+ * dsh-plugin-miku-skin — global stylesheet
+ *
+ * Every color below is a token override scoped to `html[data-dsh-miku]`, the
+ * marker the client plugin sets while the bundle is enabled. The skin is
+ * dark-only by design: it overrides the complete alias palette in both the
+ * light and dark base schemes, so the Appearance preference never switches the
+ * skin back to a light surface. No images, external fonts, or network assets
+ * are used: geometry (CSS gradients and inline SVG), characters, and color.
+ *
+ * Token baseline: @deepseek-ai/dsh-client-ui-theme 0.2.1-rc.2.
+ */
+
+/* ------------------------------------------------------------------ *
+ * 1. Palette
+ * ------------------------------------------------------------------ */
+
+html[data-dsh-miku] {
+  color-scheme: dark !important;
+
+  --mku-void: #060c15;
+  --mku-void-2: #08131f;
+  --mku-panel-1: #0b1826;
+  --mku-panel-2: #0f2030;
+  --mku-panel-3: #152a3a;
+  --mku-panel-4: #1b3547;
+  --mku-code: #07101a;
+  --mku-code-2: #0a1724;
+
+  --mku-teal: #39c5bb;
+  --mku-teal-bright: #6ff7ec;
+  --mku-teal-dim: #1e6f70;
+  --mku-teal-deep: #0e3b3f;
+  --mku-pink: #ff6fb5;
+  --mku-pink-dim: #b3477e;
+  --mku-blue: #5fb3ff;
+  --mku-mint: #4ee0a8;
+  --mku-amber: #f7ad31;
+  --mku-coral: #ff7a7a;
+
+  --mku-ink: #ecfffc;
+  --mku-ink-2: #a9cfcb;
+  --mku-ink-3: #7fa6a4;
+  --mku-ink-4: #5e7f80;
+  --mku-ink-5: #47666a;
+  --mku-ink-bright: #dffffb;
+  --mku-on-accent: #041318;
+
+  --mku-line-1: rgba(111, 247, 236, 0.07);
+  --mku-line-2: rgba(111, 247, 236, 0.12);
+  --mku-line-3: rgba(111, 247, 236, 0.17);
+  --mku-line-4: rgba(111, 247, 236, 0.26);
+
+  --dsw-focus-ring-color: var(--mku-teal-bright);
+}
+
+/* ------------------------------------------------------------------ *
+ * 2. Static palette — dark base values
+ *
+ * The built-in static palette is scheme-invariant except for one step, but
+ * mirroring the complete dark set keeps components that read `--dsw-static-*`
+ * directly inside the skin's visual range even if DSH starts varying more of
+ * them. `neutral-850/800` are nudged teal so DSH's dark-only card rules (which
+ * read those steps directly) inherit the skin's surfaces in either scheme.
+ * ------------------------------------------------------------------ */
+
+html[data-dsh-miku] body {
+  --dsw-static-amber-100: #fef5e7;
+  --dsw-static-amber-400: #f7ad31;
+  --dsw-static-amber-500: #f59e0b;
+  --dsw-static-amber-600: #dd8629;
+  --dsw-static-amber-900: #27241f;
+  --dsw-static-blue-100: #dbeafe;
+  --dsw-static-blue-300: #93c5fd;
+  --dsw-static-blue-400: #60a5fa;
+  --dsw-static-blue-450: #4d93f8;
+  --dsw-static-blue-500: #3b82f6;
+  --dsw-static-blue-50: #eff6ff;
+  --dsw-static-blue-50p: #eaf3ff;
+  --dsw-static-blue-600: #2563eb;
+  --dsw-static-blue-75: #e5f0ff;
+  --dsw-static-blue-800: #1e40af;
+  --dsw-static-blue-900: #0e3074;
+  --dsw-static-blue-950: #172554;
+  --dsw-static-deepseek-100: #e4edfd;
+  --dsw-static-deepseek-200: #d3e2ff;
+  --dsw-static-deepseek-300: #b7c8fe;
+  --dsw-static-deepseek-400: #7aaaff;
+  --dsw-static-deepseek-450: #5686fe;
+  --dsw-static-deepseek-500: #4176e6;
+  --dsw-static-deepseek-50: #edf3fe;
+  --dsw-static-deepseek-600: #4868b2;
+  --dsw-static-deepseek-700-delete: #31527f;
+  --dsw-static-deepseek-800: #34415b;
+  --dsw-static-deepseek-900: #283142;
+  --dsw-static-green-100: #e6faed;
+  --dsw-static-green-400: #4ed17e;
+  --dsw-static-green-500: #22c55e;
+  --dsw-static-green-500-a08: #22c55e14;
+  --dsw-static-green-500-a12: #22c55e1f;
+  --dsw-static-green-900: #233c2c;
+  --dsw-static-neutral-00: #fff;
+  --dsw-static-neutral-1000: #000;
+  --dsw-static-neutral-100: #f5f5f5;
+  --dsw-static-neutral-150: #ededed;
+  --dsw-static-neutral-200: #e5e5e5;
+  --dsw-static-neutral-250: #dcdcdc;
+  --dsw-static-neutral-300: #d4d4d4;
+  --dsw-static-neutral-400: #a2a4a6;
+  --dsw-static-neutral-500: #7f8287;
+  --dsw-static-neutral-50: #fafafa;
+  --dsw-static-neutral-550: #65676b;
+  --dsw-static-neutral-600: #545557;
+  --dsw-static-neutral-700: #3c3c3d;
+  --dsw-static-neutral-800: #172f42;
+  --dsw-static-neutral-850: #122536;
+  --dsw-static-neutral-900: #0f0f0f;
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-150: #e9ecf2;
+  --dsw-static-neutral-bluish-200: #e1e5ee;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-500: #979da6;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-60: #f9fafb;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-750: #43454a;
+  --dsw-static-neutral-bluish-75: #f1f3f5;
+  --dsw-static-neutral-bluish-800: #353638;
+  --dsw-static-neutral-bluish-850: #2c2c2e;
+  --dsw-static-neutral-bluish-875: #232324;
+  --dsw-static-neutral-bluish-900: #1b1b1c;
+  --dsw-static-neutral-bluish-950: #151517;
+  --dsw-static-red-100: #fee2e2;
+  --dsw-static-red-400: #f25a5a;
+  --dsw-static-red-400-a12: #f25a5a1f;
+  --dsw-static-red-500: #ef4444;
+  --dsw-static-red-50: #fef2f2;
+  --dsw-static-red-600: #ec1313;
+  --dsw-static-red-600-a08: #ec131314;
+  --dsw-static-red-900: #570c0c;
+}
+
+/* ------------------------------------------------------------------ *
+ * 3. Alias palette — all 114 aliases from the base sheet
+ * ------------------------------------------------------------------ */
+
+html[data-dsh-miku] body {
+  --dsw-alias-bg-base: var(--mku-void);
+  --dsw-alias-bg-document-preview: var(--mku-void);
+  --dsw-alias-bg-document-selection: rgba(57, 197, 187, 0.35);
+  --dsw-alias-label-document-preview: var(--mku-ink-2);
+  --dsw-alias-bg-layer-1: var(--mku-panel-1);
+  --dsw-alias-bg-layer-2: var(--mku-panel-2);
+  --dsw-alias-bg-layer-3: var(--mku-panel-3);
+  --dsw-alias-bg-mask-1: #00000080;
+  --dsw-alias-bg-mask-2: #00000033;
+  --dsw-alias-bg-mask-3: #0000007a;
+  --dsw-alias-bg-mask-photo: #000000e0;
+  --dsw-alias-bg-mask-drop: #08131fb3;
+  --dsw-alias-bg-module-platform: var(--mku-panel-2);
+  --dsw-alias-bg-multi-select: var(--mku-panel-2);
+  --dsw-alias-bg-overlay: var(--mku-panel-4);
+  --dsw-alias-bg-skeleton: #6ff7ec14;
+  --dsw-alias-border-inverted2: #04131824;
+  --dsw-alias-border-inverted: #04131814;
+  --dsw-alias-border-l1: var(--mku-line-1);
+  --dsw-alias-border-l2-darkmode-thin: rgba(111, 247, 236, 0.1);
+  --dsw-alias-border-l2: var(--mku-line-2);
+  --dsw-alias-border-l3: var(--mku-line-3);
+  --dsw-alias-border-l4: var(--mku-line-4);
+  --dsw-alias-brand-primary-invert: var(--mku-on-accent);
+  --dsw-alias-brand-primary-new-colorprimary-new-color: var(--mku-teal);
+  --dsw-alias-brand-primary: var(--mku-teal);
+  --dsw-alias-brand-text: var(--mku-ink-bright);
+  --dsw-alias-button-contrast-fill: #e6fffc;
+  --dsw-alias-button-elevated-fill: #122536;
+  --dsw-alias-button-floating-fill: #0f2030;
+  --dsw-alias-button-floating-hover: #152a3a;
+  --dsw-alias-button-ghost-active-border: #2a5a5c;
+  --dsw-alias-button-ghost-active-fill: #12303a;
+  --dsw-alias-button-ghost-active-hover: #173a44;
+  --dsw-alias-button-info-fill: var(--mku-blue);
+  --dsw-alias-button-info-hover: #86c7ff;
+  --dsw-alias-button-primary-dimmed: #155a58;
+  --dsw-alias-button-primary-fill: var(--mku-teal);
+  --dsw-alias-button-primary-hover: #7ff7ec;
+  --dsw-alias-button-tool-bar-fill-invisible: #07131f66;
+  --dsw-alias-button-tool-bar-fill: #0918229e;
+  --dsw-alias-button-tool-bar-hover: #112a38b8;
+  --dsw-alias-interactive-bg-active: rgba(57, 197, 187, 0.18);
+  --dsw-alias-interactive-bg-hover-accent: rgba(57, 197, 187, 0.28);
+  --dsw-alias-interactive-bg-hover-danger: rgba(255, 122, 122, 0.14);
+  --dsw-alias-interactive-bg-hover-solid: #122536;
+  --dsw-alias-interactive-bg-hover: rgba(57, 197, 187, 0.1);
+  --dsw-alias-label-caption: var(--mku-ink-4);
+  --dsw-alias-label-deep-diving: #7ff3e8;
+  --dsw-alias-label-deep-diving-shimmer: #b6fff5;
+  --dsw-alias-label-dimmed: var(--mku-ink-5);
+  --dsw-alias-label-primary-bluish: var(--mku-ink-bright);
+  --dsw-alias-label-primary-dimmed: #c9ede9;
+  --dsw-alias-label-primary-foreground: var(--mku-on-accent);
+  --dsw-alias-label-primary-inverted: var(--mku-on-accent);
+  --dsw-alias-label-primary: var(--mku-ink);
+  --dsw-alias-label-secondary: var(--mku-ink-2);
+  --dsw-alias-label-shimmer: rgba(255, 255, 255, 0.42);
+  --dsw-alias-label-tertiary: var(--mku-ink-3);
+  --dsw-alias-menu-icon: #c9ede9;
+  --dsw-alias-link: var(--mku-teal-bright);
+  --dsw-alias-markdown-citation: #12303a;
+  --dsw-alias-markdown-code-block-banner: var(--mku-code-2);
+  --dsw-alias-markdown-code-block: var(--mku-code);
+  --dsw-alias-markdown-code-segment-selected: #11293a;
+  --dsw-alias-markdown-code-segment-unselected: var(--mku-code);
+  --dsw-alias-markdown-inline-code: #0f2230;
+  --dsw-alias-markdown-placeholder: #0c1b29;
+  --dsw-alias-markdown-tag: #0e2231;
+  --dsw-alias-scrollbar-bg-l1: #245b5c;
+  --dsw-alias-scrollbar-bg-l2: #2f7373;
+  --dsw-alias-scrollbar-hover-l1: #3c8988;
+  --dsw-alias-scrollbar-hover-l2: #4fa8a5;
+  --dsw-alias-state-business-primary: var(--mku-teal);
+  --dsw-alias-state-business-tertiary: #123a3a;
+  --dsw-alias-code-diff-added: #4ee0a81f;
+  --dsw-alias-code-diff-deleted: #ff7a7a1f;
+  --dsw-alias-file-diff-added-bg: #0f3326;
+  --dsw-alias-file-diff-added-gutter: #0a241a;
+  --dsw-alias-file-diff-added-marker: var(--mku-mint);
+  --dsw-alias-file-diff-deleted-bg: #3a1e22;
+  --dsw-alias-file-diff-deleted-gutter: #281316;
+  --dsw-alias-file-diff-deleted-marker: #ff8f8f;
+  --dsw-alias-state-error-primary: var(--mku-coral);
+  --dsw-alias-state-error-secondary: #ff9d9d;
+  --dsw-alias-state-idle-primary: #5e7f84;
+  --dsw-alias-state-success-primary: var(--mku-mint);
+  --dsw-alias-state-success-secondary: #7ff3c6;
+  --dsw-alias-state-success-tertiary: #123a2e;
+  --dsw-alias-state-warn-label: var(--mku-amber);
+  --dsw-alias-state-warn-primary: var(--mku-amber);
+  --dsw-alias-state-warn-secondary: #f5c56b;
+  --dsw-alias-state-warn-tertiary: #3a2a12;
+  --dsw-alias-switch-thumb: #9fe7e1;
+  --dsw-alias-toast-bg: #122536;
+  --dsw-alias-toast-label: var(--mku-ink);
+  --dsw-alias-tooltip-bg: #122536;
+  --dsw-alias-tooltip-key-bg: #1b3546;
+  --dsw-alias-turn-trigger-bg: rgba(57, 197, 187, 0.1);
+  --dsw-alias-turn-trigger-bg-hover: rgba(57, 197, 187, 0.18);
+  --dsw-specific-bubble-highlight: #143640;
+  --dsw-specific-bubble: #0e2730;
+  --dsw-specific-input-major: var(--mku-panel-2);
+  --dsw-specific-login-input: var(--mku-panel-1);
+  --dsw-menu-surface-fill: #071019db;
+  --dsw-alias-menu-group-header-fill: #091522f0;
+  --dsw-specific-menu: var(--dsw-menu-surface-fill);
+  --dsw-specific-selector: #102433;
+  --dsw-specific-sidebar-fill: var(--mku-void-2);
+  --dsw-specific-sidebar-nav-item-active-accent: rgba(57, 197, 187, 0.22);
+  --dsw-specific-sidebar-nav-item-active: #0e2a32;
+  --dsw-specific-sidebar-nav-item-hover: #0a1d25;
+  --dsw-specific-tip: #0d2130;
+}
+
+/* Onboarding and focus aliases live outside the design-platform alias block. */
+html[data-dsh-miku] body {
+  --dsw-alias-onboarding-accent: var(--mku-teal);
+  --dsw-alias-onboarding-card-fill: #0f2030cc;
+  --dsw-alias-onboarding-secondary-fill: #1a3340;
+  --dsw-alias-onboarding-checkbox-border: rgba(111, 247, 236, 0.35);
+  --dsw-gradient-onboarding-violet-stops: #0e3b3f 33.102%, #39c5bb 50.954%, #a5ffd9 85.326%, #0e3b3f;
+  --dsw-gradient-onboarding-blue-stops: #1e6f70 18.75%, #39c5bb 51.78%, #6ff7ec 86.252%, #1e6f70;
+  --dsw-gradient-onboarding-cyan-stops: #0e3b3f 21.154%, #39c5bb 50.954%, #b6fff5 85.326%, #0e3b3f;
+}
+
+/* Dark-only component variables and the shiki syntax palette. */
+html[data-dsh-miku] body {
+  --changes-fill: #122536;
+  --changes-hover: #172f42;
+  --deliverable-fill: #122536;
+  --deliverable-hover: #172f42;
+  --plan-card-fill: #122536;
+  --plan-card-hover: #172f42;
+  --card-fill: #122536;
+  --card-hover: #172f42;
+
+  --dsw-elevation-stroke-color: var(--mku-line-3);
+  --dsw-linear-gradient-think: linear-gradient(180deg, #0b1826 20.19%, rgba(11, 24, 38, 0) 100%);
+  --dsw-linear-think-select: linear-gradient(180deg, #102a33 20.19%, rgba(16, 42, 51, 0) 100%);
+
+  --shiki-background: var(--mku-code);
+  --shiki-foreground: var(--mku-ink);
+  --shiki-token-constant: #7aa6ff;
+  --shiki-token-string: #7ff3e8;
+  --shiki-token-comment: var(--mku-ink-4);
+  --shiki-token-keyword: #ff7fc4;
+  --shiki-token-parameter: #f5c56b;
+  --shiki-token-function: #b7a4ff;
+  --shiki-token-string-expression: #a5ffd9;
+  --shiki-token-punctuation: #9bc7c4;
+  --shiki-token-link: var(--mku-teal-bright);
+}
+
+/* Darwin keeps a separate menu fill in the base sheet; match the film there. */
+html[data-platform='darwin'][data-dsh-miku] body,
+html[data-platform='darwin'][data-dsh-miku] body[data-ds-dark-theme] {
+  --dsw-specific-menu: #071019ef;
+}
+
+/* ------------------------------------------------------------------ *
+ * 4. Document accents
+ * ------------------------------------------------------------------ */
+
+html[data-dsh-miku] ::selection {
+  background: rgba(57, 197, 187, 0.32);
+  color: var(--mku-ink);
+}
+
+html[data-dsh-miku] body :is(input, textarea, [contenteditable='true'], [contenteditable='']) {
+  caret-color: var(--mku-teal-bright);
+}
+
+/* ------------------------------------------------------------------ *
+ * 5. Brand mark — twin tails, headset, and the 01 numerals
+ * ------------------------------------------------------------------ */
+
+.dsh-miku-mark {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--dsh-miku-size, 24px);
+  height: var(--dsh-miku-size, 24px);
+  color: var(--mku-teal);
+  filter: drop-shadow(0 0 3px rgba(57, 197, 187, 0.35));
+}
+
+.dsh-miku-mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.dsh-miku-mark-01 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -47%);
+  color: #eafffd;
+  font-family: 'DejaVu Sans Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: calc(var(--dsh-miku-size, 24px) * 0.245);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-shadow: 0 0 3px rgba(57, 197, 187, 0.45);
+  pointer-events: none;
+}
+
+/* The hero passes the shell's own `.fish` class; this rule keeps the hover
+ * wiggle and transform origin meaningful on our outer element. */
+.dsh-miku-mark:is(.fish) {
+  transform-origin: 50% 60%;
+}
+
+/* ------------------------------------------------------------------ *
+ * 6. Sidebar wordmark
+ * ------------------------------------------------------------------ */
+
+.dsh-miku-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  height: 24px;
+  font-family: var(--dsw-font-family-brand, 'Montserrat', system-ui), sans-serif;
+  line-height: 1;
+}
+
+.dsh-miku-wordmark-main {
+  background: linear-gradient(100deg, #e9fffb 0%, #8ff7ee 45%, #39c5bb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.dsh-miku-wordmark-01 {
+  flex: none;
+  padding: 2px 3px 1px;
+  border: 1px solid rgba(57, 197, 187, 0.5);
+  border-radius: 3px;
+  background: rgba(57, 197, 187, 0.12);
+  color: #d8fff9;
+  font-family: 'DejaVu Sans Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.dsh-miku-wordmark-note {
+  flex: none;
+  color: var(--mku-pink);
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+/* ------------------------------------------------------------------ *
+ * 7. Ambient layer
+ *
+ * Mounted into the shell.overlay list slot, above the app frame but click-
+ * through. A radial mask keeps the reading column visually quiet; the
+ * ornaments live at the edges and corners.
+ * ------------------------------------------------------------------ */
+
+.dsh-miku-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none !important;
+  font-variant-emoji: text;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 44%, transparent 0 30%, #000 74%);
+  mask-image: radial-gradient(ellipse at 50% 44%, transparent 0 30%, #000 74%);
+}
+
+.dsh-miku-ambient > * {
+  pointer-events: none;
+}
+
+.dsh-miku-glow {
+  position: absolute;
+  inset: -12%;
+  background:
+    radial-gradient(38% 42% at 88% 4%, rgba(57, 197, 187, 0.2), transparent 70%),
+    radial-gradient(34% 38% at 6% 98%, rgba(255, 111, 181, 0.11), transparent 70%),
+    radial-gradient(28% 32% at 4% 2%, rgba(111, 247, 236, 0.08), transparent 72%);
+  animation: dsh-miku-breathe 12s ease-in-out infinite;
+}
+
+.dsh-miku-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(111, 247, 236, 0.028) 0 1px,
+    transparent 1px 4px
+  );
+  opacity: 0.7;
+}
+
+.dsh-miku-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(111, 247, 236, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(111, 247, 236, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to left, #000 0 22%, transparent 48%);
+  mask-image: linear-gradient(to left, #000 0 22%, transparent 48%);
+}
+
+.dsh-miku-ribbons {
+  position: absolute;
+  top: 6%;
+  right: -6%;
+  width: 54%;
+  height: 86%;
+  opacity: 0.16;
+  transform: rotate(-2deg);
+  animation: dsh-miku-drift 26s ease-in-out infinite;
+}
+
+.dsh-miku-notes {
+  position: absolute;
+  inset: 0;
+}
+
+.dsh-miku-note {
+  position: absolute;
+  font-family: 'Noto Sans Symbols 2', 'Noto Sans CJK SC', 'Segoe UI Symbol', sans-serif;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px rgba(57, 197, 187, 0.25));
+}
+
+.dsh-miku-note-1 {
+  top: 15%;
+  right: 5%;
+  color: var(--mku-teal);
+  font-size: 38px;
+  opacity: 0.16;
+  animation: dsh-miku-float 15s ease-in-out infinite;
+}
+
+.dsh-miku-note-2 {
+  top: 54%;
+  right: 12%;
+  color: var(--mku-pink);
+  font-size: 24px;
+  opacity: 0.15;
+  animation: dsh-miku-float 19s ease-in-out -4s infinite reverse;
+}
+
+.dsh-miku-note-3 {
+  bottom: 20%;
+  left: 4%;
+  color: var(--mku-teal-bright);
+  font-size: 30px;
+  opacity: 0.12;
+  animation: dsh-miku-float 23s ease-in-out -9s infinite;
+}
+
+.dsh-miku-note-4 {
+  right: 3%;
+  bottom: 7%;
+  color: var(--mku-mint);
+  font-size: 20px;
+  opacity: 0.18;
+  animation: dsh-miku-float 17s ease-in-out -2s infinite reverse;
+}
+
+.dsh-miku-eq {
+  position: absolute;
+  right: 24px;
+  bottom: 58px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 64px;
+  opacity: 0.24;
+  transform: skewX(-7deg);
+}
+
+.dsh-miku-eq-bar {
+  display: block;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(to top, var(--mku-teal-dim), var(--mku-teal-bright));
+  transform-origin: bottom;
+  animation: dsh-miku-eq 2.6s ease-in-out infinite alternate;
+}
+
+.dsh-miku-eq-bar:nth-child(1) { height: 26%; animation-delay: -0.2s; }
+.dsh-miku-eq-bar:nth-child(2) { height: 58%; animation-delay: -1.1s; }
+.dsh-miku-eq-bar:nth-child(3) { height: 38%; animation-delay: -0.6s; }
+.dsh-miku-eq-bar:nth-child(4) { height: 82%; animation-delay: -1.6s; }
+.dsh-miku-eq-bar:nth-child(5) { height: 100%; animation-delay: -0.9s; }
+.dsh-miku-eq-bar:nth-child(6) { height: 72%; animation-delay: -2.1s; }
+.dsh-miku-eq-bar:nth-child(7) { height: 46%; animation-delay: -0.4s; }
+.dsh-miku-eq-bar:nth-child(8) { height: 64%; animation-delay: -1.4s; }
+.dsh-miku-eq-bar:nth-child(9) { height: 30%; animation-delay: -0.8s; }
+
+.dsh-miku-hud {
+  position: absolute;
+  inset: 14px;
+  opacity: 0.32;
+  background:
+    linear-gradient(90deg, var(--mku-teal), transparent) left top / 72px 1px no-repeat,
+    linear-gradient(180deg, var(--mku-teal), transparent) left top / 1px 72px no-repeat,
+    linear-gradient(270deg, var(--mku-teal), transparent) right top / 72px 1px no-repeat,
+    linear-gradient(180deg, var(--mku-teal), transparent) right top / 1px 72px no-repeat,
+    linear-gradient(90deg, transparent, var(--mku-pink)) left bottom / 72px 1px no-repeat,
+    linear-gradient(0deg, var(--mku-pink), transparent) left bottom / 1px 72px no-repeat,
+    linear-gradient(270deg, transparent, var(--mku-teal)) right bottom / 72px 1px no-repeat,
+    linear-gradient(0deg, var(--mku-teal), transparent) right bottom / 1px 72px no-repeat;
+}
+
+.dsh-miku-caption {
+  position: absolute;
+  right: 18px;
+  bottom: 146px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  color: rgba(111, 247, 236, 0.38);
+  font-family: var(--dsw-font-family-brand, 'Montserrat', system-ui), sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 0 10px rgba(57, 197, 187, 0.28);
+}
+
+@keyframes dsh-miku-breathe {
+  0%, 100% { opacity: 0.78; }
+  50% { opacity: 1; }
+}
+
+@keyframes dsh-miku-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(0, -14px, 0) rotate(3deg); }
+}
+
+@keyframes dsh-miku-drift {
+  0%, 100% { transform: rotate(-2deg) translate3d(0, 0, 0); }
+  50% { transform: rotate(0deg) translate3d(-10px, 8px, 0); }
+}
+
+@keyframes dsh-miku-eq {
+  from { transform: scaleY(0.35); }
+  to { transform: scaleY(1); }
+}
+
+@media (max-width: 900px) {
+  .dsh-miku-ribbons,
+  .dsh-miku-caption,
+  .dsh-miku-note-2,
+  .dsh-miku-note-3 {
+    display: none;
+  }
+
+  .dsh-miku-eq {
+    right: 14px;
+    bottom: 24px;
+    height: 44px;
+    opacity: 0.18;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dsh-miku-ambient,
+  .dsh-miku-ambient * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .dsh-miku-ambient {
+    display: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * 8. Reduced transparency keeps the menu material readable
+ * ------------------------------------------------------------------ */
+
+@media (prefers-reduced-transparency: reduce) {
+  html[data-dsh-miku] body {
+    --dsw-menu-surface-fill: #08131ff5;
+    --dsw-alias-menu-group-header-fill: #091522;
+  }
+}

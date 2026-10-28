@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="zh-CN" data-dsh-miku>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>MIKU skin — visual preview</title>
+  <link rel="stylesheet" href="../src/client/styles.css">
+  <style>
+    /* Dev-only mock chrome. It consumes the skin's real tokens so the palette,
+       mark and ambient layer can be reviewed without booting DSH. */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: var(--dsw-alias-bg-base);
+      color: var(--dsw-alias-label-primary);
+      font: 14px/22px "Noto Sans CJK SC", system-ui, sans-serif;
+    }
+    button { font: inherit; }
+    .preview-app {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      height: 100vh;
+    }
+    .preview-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 16px 12px 12px;
+      overflow: hidden;
+      background: var(--dsw-specific-sidebar-fill);
+      border-right: .5px solid var(--dsw-alias-border-l3);
+    }
+    .preview-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 24px;
+      margin: 2px 4px 12px;
+    }
+    .preview-new {
+      height: 34px;
+      border: .5px solid var(--dsw-alias-border-l4);
+      border-radius: 10px;
+      background: var(--dsw-alias-interactive-bg-hover);
+      color: var(--dsw-alias-label-primary);
+      text-align: left;
+      padding: 0 12px;
+      cursor: pointer;
+    }
+    .preview-new:hover { background: var(--dsw-alias-interactive-bg-active); }
+    .preview-section-title {
+      margin: 10px 6px 2px;
+      color: var(--dsw-alias-label-caption);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .preview-nav { display: flex; flex-direction: column; gap: 2px; }
+    .preview-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 32px;
+      padding: 0 10px;
+      border-radius: 8px;
+      color: var(--dsw-alias-label-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .preview-nav-item:hover { background: var(--dsw-specific-sidebar-nav-item-hover); }
+    .preview-nav-item[data-active] {
+      background: var(--dsw-specific-sidebar-nav-item-active);
+      color: var(--dsw-alias-label-primary);
+      box-shadow: inset 2px 0 0 var(--dsw-alias-brand-primary);
+    }
+    .preview-nav-item .dot { color: var(--dsw-alias-label-tertiary); font-size: 11px; }
+    .preview-sidebar-foot {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: .5px solid var(--dsw-alias-border-l2);
+      color: var(--dsw-alias-label-tertiary);
+      font-size: 12px;
+    }
+    .preview-main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: none;
+      min-height: 64px;
+      padding: 10px 28px;
+      border-bottom: .5px solid var(--dsw-alias-border-l2);
+    }
+    .preview-header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--dsw-font-family-brand, "Montserrat", system-ui), sans-serif;
+      font-size: 15px;
+      letter-spacing: .06em;
+      color: var(--dsw-alias-label-primary);
+    }
+    .preview-badge {
+      padding: 2px 6px;
+      border: 1px solid var(--dsw-alias-border-l4);
+      border-radius: 4px;
+      color: var(--dsw-alias-label-tertiary);
+      font: 600 10px/1.4 ui-monospace, monospace;
+      letter-spacing: .1em;
+    }
+    .preview-scroll {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex: 1;
+      min-height: 0;
+      padding: 26px clamp(20px, 5vw, 76px) 34px;
+      overflow: auto;
+    }
+    .preview-hero {
+      flex: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: 6vh 0 2vh;
+      text-align: center;
+    }
+    .preview-hero h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 32px;
+      letter-spacing: .02em;
+    }
+    .preview-hero p {
+      margin: 0;
+      color: var(--dsw-alias-label-tertiary);
+      font-size: 13px;
+    }
+    .preview-composer {
+      flex: none;
+      width: min(760px, 100%);
+      margin: 0 auto;
+      border: .5px solid var(--dsw-alias-border-l4);
+      border-radius: 18px;
+      background: var(--dsw-specific-input-major);
+      overflow: hidden;
+    }
+    .preview-composer-input {
+      display: flex;
+      align-items: center;
+      height: 58px;
+      padding: 0 18px;
+      color: var(--dsw-alias-label-tertiary);
+      caret-color: var(--dsw-focus-ring-color);
+    }
+    .preview-composer-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-top: .5px solid var(--dsw-alias-border-l1);
+    }
+    .preview-spacer { flex: 1; }
+    .preview-btn {
+      height: 28px;
+      padding: 0 12px;
+      border: .5px solid var(--dsw-alias-border-l4);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--dsw-alias-label-secondary);
+      cursor: pointer;
+    }
+    .preview-btn:hover { background: var(--dsw-alias-interactive-bg-hover); }
+    .preview-btn.primary {
+      border-color: transparent;
+      background: var(--dsw-alias-button-primary-fill);
+      color: var(--dsw-alias-label-primary-foreground);
+      font-weight: 500;
+    }
+    .preview-btn.primary:hover { background: var(--dsw-alias-button-primary-hover); }
+    .preview-btn.info { color: var(--dsw-alias-button-info-fill); border-color: color-mix(in srgb, var(--dsw-alias-button-info-fill) 45%, transparent); }
+    .preview-transcript {
+      flex: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: min(760px, 100%);
+      margin: 0 auto;
+    }
+    .preview-user {
+      align-self: flex-end;
+      max-width: 82%;
+      padding: 10px 14px;
+      border: .5px solid var(--dsw-alias-border-l2);
+      border-radius: 14px 14px 4px 14px;
+      background: var(--dsw-specific-bubble);
+      color: var(--dsw-alias-label-primary);
+    }
+    .preview-assistant {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 86%;
+      color: var(--dsw-alias-label-primary);
+    }
+    .preview-assistant p { margin: 0; }
+    .preview-code {
+      margin: 0;
+      padding: 12px 14px;
+      overflow: auto;
+      border: .5px solid var(--dsw-alias-border-l2);
+      border-radius: 10px;
+      background: var(--dsw-alias-markdown-code-block);
+      font: 11px/18px "DejaVu Sans Mono", ui-monospace, monospace;
+    }
+    .tok-key { color: var(--shiki-token-keyword); }
+    .tok-fn { color: var(--shiki-token-function); }
+    .tok-str { color: var(--shiki-token-string); }
+    .tok-comment { color: var(--shiki-token-comment); }
+    .preview-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+    .preview-state {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: .5px solid var(--dsw-alias-border-l3);
+      background: var(--dsw-alias-bg-layer-2);
+      font-size: 11px;
+      color: var(--dsw-alias-label-secondary);
+    }
+    .preview-state.ok { color: var(--dsw-alias-state-success-primary); }
+    .preview-state.warn { color: var(--dsw-alias-state-warn-primary); }
+    .preview-state.err { color: var(--dsw-alias-state-error-primary); }
+    .preview-panel-row {
+      flex: none;
+      display: flex;
+      gap: 14px;
+      width: min(760px, 100%);
+      margin: 0 auto;
+    }
+    .preview-menu {
+      flex: 1;
+      padding: 8px;
+      border: .5px solid var(--dsw-alias-border-l3);
+      border-radius: 12px;
+      background: var(--dsw-specific-menu);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, .35);
+    }
+    .preview-menu-title {
+      padding: 4px 8px 6px;
+      color: var(--dsw-alias-label-caption);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .preview-menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 8px;
+      border-radius: 7px;
+      color: var(--dsw-alias-label-secondary);
+      cursor: pointer;
+    }
+    .preview-menu-item:hover { background: var(--dsw-alias-interactive-bg-hover); }
+    .preview-menu-item span:last-child { color: var(--dsw-alias-label-caption); font: 10px/1 ui-monospace, monospace; }
+    .preview-scrollbar {
+      flex: 0 0 190px;
+      padding: 12px;
+      border: .5px dashed var(--dsw-alias-border-l3);
+      border-radius: 12px;
+      color: var(--dsw-alias-label-tertiary);
+      font-size: 12px;
+    }
+    .preview-swatch { display: flex; gap: 6px; margin-top: 10px; }
+    .preview-swatch i { width: 22px; height: 22px; border-radius: 6px; display: block; border: 1px solid var(--dsw-alias-border-l2); }
+    .preview-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .preview-controls {
+      position: fixed;
+      left: 12px;
+      bottom: 12px;
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 8px 10px;
+      border: .5px solid var(--dsw-alias-border-l3);
+      border-radius: 8px;
+      background: var(--dsw-specific-menu);
+      color: var(--dsw-alias-label-tertiary);
+      font: 11px/1.6 ui-monospace, monospace;
+      backdrop-filter: blur(10px);
+    }
+    .preview-controls label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .preview-controls input { accent-color: var(--dsw-alias-brand-primary); }
+    @media (max-width: 900px) {
+      .preview-app { grid-template-columns: 1fr; }
+      .preview-sidebar { display: none; }
+    }
+  </style>
+</head>
+<body data-ds-dark-theme>
+  <div class="preview-app">
+    <aside class="preview-sidebar">
+      <div class="preview-brand">
+        <span class="dsh-miku-mark" style="--dsh-miku-size:24px;width:24px;height:24px" aria-hidden="true">
+          <svg viewBox="0 0 32 32" focusable="false">
+            <path d="M12.4 5.2 C7 8.1 4.4 13.2 5.5 19.6 C6.1 23 5.1 26.3 3.9 29.1" fill="none" stroke="#1e6f70" stroke-width="3.4" stroke-linecap="round"/>
+            <path d="M19.6 5.2 C25 8.1 27.6 13.2 26.5 19.6 C25.9 23 26.9 26.3 28.1 29.1" fill="none" stroke="#1e6f70" stroke-width="3.4" stroke-linecap="round"/>
+            <path d="M12.4 5.2 C7 8.1 4.4 13.2 5.5 19.6 C6.1 23 5.1 26.3 3.9 29.1" fill="none" stroke="#6ff7ec" stroke-width="1.1" stroke-linecap="round" stroke-opacity=".85"/>
+            <path d="M19.6 5.2 C25 8.1 27.6 13.2 26.5 19.6 C25.9 23 26.9 26.3 28.1 29.1" fill="none" stroke="#6ff7ec" stroke-width="1.1" stroke-linecap="round" stroke-opacity=".85"/>
+            <circle cx="16" cy="15" r="6.2" fill="#07101a" stroke="#39c5bb" stroke-width="1.2"/>
+            <path d="M10.1 13.1 C10.7 9.6 13 7.7 16 7.7 C19 7.7 21.3 9.6 21.9 13.1" fill="none" stroke="#6ff7ec" stroke-width=".95" stroke-linecap="round" stroke-opacity=".8"/>
+            <circle cx="21.9" cy="13.1" r=".95" fill="#ff6fb5"/>
+          </svg>
+          <span class="dsh-miku-mark-01" aria-hidden="true">01</span>
+        </span>
+        <span class="dsh-miku-wordmark">
+          <span class="dsh-miku-wordmark-main">MIKU</span>
+          <span class="dsh-miku-wordmark-01">01</span>
+          <span class="dsh-miku-wordmark-note" aria-hidden="true">♪</span>
+        </span>
+      </div>
+
+      <button class="preview-new" type="button">＋ 新建会话</button>
+
+      <div class="preview-section-title">Workspaces</div>
+      <div class="preview-nav">
+        <div class="preview-nav-item" data-active><span class="dot">◆</span> dsh-plugin-miku-skin</div>
+        <div class="preview-nav-item"><span class="dot">◇</span> DeepSeek Harness</div>
+        <div class="preview-nav-item"><span class="dot">◇</span> 设计参考</div>
+      </div>
+
+      <div class="preview-section-title">Sessions</div>
+      <div class="preview-nav">
+        <div class="preview-nav-item"><span class="dot">♪</span> 初音未来皮肤令牌整理</div>
+        <div class="preview-nav-item"><span class="dot">♫</span> 深色主题对比度审阅</div>
+        <div class="preview-nav-item"><span class="dot">♬</span> 几何装饰层动效</div>
+      </div>
+
+      <div class="preview-sidebar-foot">⚙ 设置　·　插件</div>
+    </aside>
+
+    <main class="preview-main">
+      <header class="preview-header">
+        <div class="preview-header-title">MIKU DARK SKIN <span class="preview-badge">PREVIEW</span></div>
+        <div class="preview-meta">
+          <span class="preview-state ok">皮肤已启用</span>
+          <span class="preview-state">01 / 39</span>
+        </div>
+      </header>
+
+      <div class="preview-scroll">
+        <section class="preview-hero">
+          <span class="dsh-miku-mark" style="--dsh-miku-size:34px;width:34px;height:34px" aria-hidden="true">
+            <svg viewBox="0 0 32 32" focusable="false">
+              <path d="M12.4 5.2 C7 8.1 4.4 13.2 5.5 19.6 C6.1 23 5.1 26.3 3.9 29.1" fill="none" stroke="#1e6f70" stroke-width="3.4" stroke-linecap="round"/>
+              <path d="M19.6 5.2 C25 8.1 27.6 13.2 26.5 19.6 C25.9 23 26.9 26.3 28.1 29.1" fill="none" stroke="#1e6f70" stroke-width="3.4" stroke-linecap="round"/>
+              <path d="M12.4 5.2 C7 8.1 4.4 13.2 5.5 19.6 C6.1 23 5.1 26.3 3.9 29.1" fill="none" stroke="#6ff7ec" stroke-width="1.1" stroke-linecap="round" stroke-opacity=".85"/>
+              <path d="M19.6 5.2 C25 8.1 27.6 13.2 26.5 19.6 C25.9 23 26.9 26.3 28.1 29.1" fill="none" stroke="#6ff7ec" stroke-width="1.1" stroke-linecap="round" stroke-opacity=".85"/>
+              <circle cx="16" cy="15" r="6.2" fill="#07101a" stroke="#39c5bb" stroke-width="1.2"/>
+              <path d="M10.1 13.1 C10.7 9.6 13 7.7 16 7.7 C19 7.7 21.3 9.6 21.9 13.1" fill="none" stroke="#6ff7ec" stroke-width=".95" stroke-linecap="round" stroke-opacity=".8"/>
+              <circle cx="21.9" cy="13.1" r=".95" fill="#ff6fb5"/>
+            </svg>
+            <span class="dsh-miku-mark-01" aria-hidden="true">01</span>
+          </span>
+          <h1>探索未至之境</h1>
+          <p>几何、字符与青绿配色构成的暗色皮肤预览</p>
+        </section>
+
+        <section class="preview-composer" aria-label="composer preview">
+          <div class="preview-composer-input">描述你想要构建的内容，/ 调用指令，@ 文件或对话</div>
+          <div class="preview-composer-bar">
+            <button class="preview-btn" type="button">＋</button>
+            <button class="preview-btn info" type="button">DeepSeek-V4-Flash</button>
+            <span class="preview-spacer"></span>
+            <button class="preview-btn" type="button">♪</button>
+            <button class="preview-btn primary" type="button">发送</button>
+          </div>
+        </section>
+
+        <section class="preview-transcript" aria-label="transcript preview">
+          <div class="preview-user">为 DSH 写一个初音未来主题的暗色皮肤插件，不直接使用图片，只通过几何、字符和配色元素呈现。</div>
+          <div class="preview-assistant">
+            <p>皮肤令牌、品牌标识与边缘装饰层已经就绪。下面是一段使用 skin 语法配色的代码：</p>
+            <pre class="preview-code"><code><span class="tok-comment">// 39 / 01 — geometry, characters, color only</span>
+<span class="tok-key">const</span> theme = <span class="tok-fn">createSkin</span>({
+  accent: <span class="tok-str">"#39c5bb"</span>,
+  surface: <span class="tok-str">"#060c15"</span>,
+  glyphs: [<span class="tok-str">"♪"</span>, <span class="tok-str">"♫"</span>, <span class="tok-str">"♬"</span>]
+})</code></pre>
+            <div class="preview-meta">
+              <span class="preview-state ok">✓ 构建通过</span>
+              <span class="preview-state warn">△ 暗色-only</span>
+              <span class="preview-state err">× 图片资源 0</span>
+            </div>
+          </div>
+
+          <div class="preview-panel-row">
+            <div class="preview-menu">
+              <div class="preview-menu-title">Commands</div>
+              <div class="preview-menu-item"><span>切换主题</span><span>⌘ K</span></div>
+              <div class="preview-menu-item"><span>新建会话</span><span>⌘ N</span></div>
+              <div class="preview-menu-item"><span>打开插件</span><span>⌘ P</span></div>
+            </div>
+            <div class="preview-scrollbar">
+              滚动条、焦点环、选中态与输入光标都使用皮肤的青绿强调色。
+              <div class="preview-swatch">
+                <i style="background:#39c5bb"></i>
+                <i style="background:#6ff7ec"></i>
+                <i style="background:#ff6fb5"></i>
+                <i style="background:#0f2030"></i>
+                <i style="background:#122536"></i>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="preview-stage">
+    <div class="dsh-miku-ambient" aria-hidden="true">
+      <div class="dsh-miku-glow"></div>
+      <div class="dsh-miku-scanlines"></div>
+      <div class="dsh-miku-grid"></div>
+      <svg class="dsh-miku-ribbons" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" focusable="false">
+        <path d="M1090 70 C860 190 780 380 900 560 C970 668 930 780 760 850" fill="none" stroke="#39c5bb" stroke-width="2" stroke-linecap="round" stroke-opacity=".9"/>
+        <path d="M1130 40 C900 170 820 360 930 540 C1000 650 980 780 820 860" fill="none" stroke="#6ff7ec" stroke-width="1" stroke-linecap="round" stroke-opacity=".7"/>
+        <path d="M760 40 C610 190 640 360 790 470 C880 540 860 680 730 760" fill="none" stroke="#ff6fb5" stroke-width="1" stroke-linecap="round" stroke-opacity=".5"/>
+      </svg>
+      <div class="dsh-miku-hud"></div>
+      <div class="dsh-miku-notes">
+        <span class="dsh-miku-note dsh-miku-note-1">♪</span>
+        <span class="dsh-miku-note dsh-miku-note-2">♫</span>
+        <span class="dsh-miku-note dsh-miku-note-3">♬</span>
+        <span class="dsh-miku-note dsh-miku-note-4">♩</span>
+      </div>
+      <div class="dsh-miku-eq">
+        <span class="dsh-miku-eq-bar"></span><span class="dsh-miku-eq-bar"></span><span class="dsh-miku-eq-bar"></span>
+        <span class="dsh-miku-eq-bar"></span><span class="dsh-miku-eq-bar"></span><span class="dsh-miku-eq-bar"></span>
+        <span class="dsh-miku-eq-bar"></span><span class="dsh-miku-eq-bar"></span><span class="dsh-miku-eq-bar"></span>
+      </div>
+      <div class="dsh-miku-caption">初音未来 / MIKU 39</div>
+    </div>
+  </div>
+
+  <div class="preview-controls">
+    <label><input type="checkbox" checked data-preview-attr="data-dsh-miku"> skin on</label>
+    <label><input type="checkbox" checked data-preview-attr="data-ds-dark-theme"> dark attr</label>
+  </div>
+
+  <script>
+    for (const input of document.querySelectorAll('[data-preview-attr]')) {
+      input.addEventListener('change', () => {
+        const target = input.dataset.previewAttr === 'data-dsh-miku' ? document.documentElement : document.body;
+        if (input.checked) target.setAttribute(input.dataset.previewAttr, '');
+        else target.removeAttribute(input.dataset.previewAttr);
+      });
+    }
+  </script>
+</body>
+</html>

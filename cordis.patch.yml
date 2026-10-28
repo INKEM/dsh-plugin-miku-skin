@@ -1,0 +1,11 @@
+# dsh bundle patch for the Miku dark skin.
+#
+# The official brand occupants own the sidebar's single brand slots. The skin
+# replaces them with its own geometric mark and wordmark, so this layer closes
+# the official row first; switching this bundle off restores it automatically.
+- id: ui-brand-official
+  disabled: true
+
+- insert:
+    - id: miku-skin
+      name: 'dsh-plugin-miku-skin'
